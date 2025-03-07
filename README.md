@@ -16,10 +16,10 @@
 
 ### **1️⃣ Automatic Setup (Recommended)**
 #### **🔹 Windows**
-1. Download python from official website https://www.python.org/downloads/
+1. Download python 3.11.9 from official website https://www.python.org/downloads/release/python-3119/
 2. Install python and make sure to check the "Add to PATH" checkbox
 3. **Download or clone** the repository.
-4. **Run** `setup.bat` by double-clicking (DO NOT RUN AS ADMIN).
+4. **Run** `setup_for_windows.bat` by double-clicking (DO NOT RUN AS ADMIN).
 5. The script will:
    - Install all required dependencies (`pillow`, `tk`, `pyinstaller`).
    - Create an executable (`ImageCropper.exe`).
@@ -33,11 +33,11 @@
    ```
 2. Make the setup script executable:
    ```sh
-   chmod +x setup.sh
+   chmod +x setup_for_mac-linux.sh
    ```
 3. Run the script:
    ```sh
-   ./setup.sh
+   ./setup_for_mac-linux.sh
    ```
 4. The script will:
    - Install dependencies.
