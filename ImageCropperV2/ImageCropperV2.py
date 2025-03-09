@@ -201,7 +201,15 @@ class ImageResizerGUI(tk.Tk):
                     img = img.convert('RGB')
 
                 if self.manual_crop_mode:
+                    self.crop_x = None  # Reset previous selection
+                    self.crop_y = None
                     self.show_crop_window(img)
+                    # Wait for crop window to close
+                    self.wait_window(self.crop_window)
+                    
+                    if self.crop_x is None or self.crop_y is None:
+                        self.log("Crop selection cancelled")
+                        return
 
                 for ratio, dimensions in self.dimensions_map.items():
                     aspect_w, aspect_h = map(int, ratio.split(":"))
@@ -223,6 +231,7 @@ class ImageResizerGUI(tk.Tk):
 
         except Exception as e:
             self.log(f"Failed to process {img_path}: {str(e)}")
+
     def clear_ratio_dimensions(self):
         self.dimensions_map.clear()
         self.dimensions_display.delete(0, tk.END)
@@ -263,6 +272,7 @@ class ImageResizerGUI(tk.Tk):
         
         self.canvas.bind("<Motion>", self.update_crop_coord_display)
         self.canvas.bind("<Button-1>", self.set_crop_center)
+
     def update_crop_coord_display(self, event):
         x = event.x
         y = event.y
@@ -296,11 +306,6 @@ class ImageResizerGUI(tk.Tk):
             self.crop_window.destroy()
         else:
             messagebox.showerror("Invalid Selection", "Please click within the image area")
-
-    def set_crop_center(self, event):
-        self.crop_x = event.x
-        self.crop_y = event.y
-        self.crop_window.destroy()
 
     def center_crop_to_aspect_ratio(self, img, aspect_w, aspect_h):
         orig_w, orig_h = img.size
